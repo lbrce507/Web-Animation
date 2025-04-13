@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Colorful Effects with Subjects</title>
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        canvas#backgroundCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        canvas#mouseCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            z-index: 2;
+            text-align: center;
+            max-width: 1200px;
+            width: 90%;
+            padding: 20px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 4rem;
+            animation: pulse 2s infinite;
+            background: linear-gradient(45deg, #ff0, #f0f, #0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff0066, #00ccff);
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 20px rgba(255, 0, 102, 0.7);
+            margin: 20px 0;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 204, 255, 0.9);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .falling-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px currentColor;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        ul li a.heading {
+            color: #0ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        ul li a.heading:hover {
+            color: #f0f;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #0ff, transparent);
+            margin: 10px 0;
+        }
+
+        h4 {
+            transform: rotate(-45deg);
+            position: relative;
+            font-size: larger;
+            text-shadow: 0 0 10px #f00;
+            margin: 40px 0;
+        }
+
+        h4 span {
+            display: block;
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        table caption {
+            font-size: 1.5rem;
+            padding: 10px;
+            background: linear-gradient(45deg, #ff0066, #00ccff);
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #0ff;
+            width: 50%;
+        }
+
+        th {
+            background: #222;
+            color: #0ff;
+        }
+
+        td {
+            color: #fff;
+        }
+
+        table.yellow {
+            background-color: rgba(255, 255, 0, 0.2);
+            color: #f00;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            border: 7px solid #f00;
+            border-radius: 20px;
+        }
+
+        table.yellow td {
+            border: 2px solid #fff;
+            color: #f00;
+        }
+
+        table.yellow button {
+            background: #000;
+            border: 2px solid #0ff;
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        a button {
+            transition: transform 0.2s;
+        }
+
+        a button:hover {
+            transform: scale(1.05);
+        }
+
+        hr.orange {
+            border: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #ff9900, transparent);
+            margin: 20px 0;
+            width: 80%;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                display: block;
+                width: 90%;
+                max-width: 500px;
+                margin: 20px auto;
+            }
+
+            table caption {
+                font-size: 1.2rem;
+            }
+
+            th, td {
+                display: block;
+                width: 100%;
+                text-align: center;
+                border: none;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                border-bottom: 1px solid #0ff;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            table.yellow {
+                border-radius: 20px;
+            }
+
+            table.yellow td {
+                border: none;
+                border-bottom: 1px solid #fff;
+                border-radius: 0;
+            }
+
+            table.yellow td:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media screen and (min-width: 601px) {
+            table {
+                display: table;
+                width: 90%;
+                max-width: 1000px;
+                margin: 20px auto;
+            }
+
+            th, td {
+                display: table-cell;
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+    <canvas id="mouseCanvas"></canvas>
+    <div class="container"></div>
+
+    <script>
+        const backgroundCanvas = document.getElementById('backgroundCanvas');
+        const backgroundCtx = backgroundCanvas.getContext('2d');
+        const mouseCanvas = document.getElementById('mouseCanvas');
+        const mouseCtx = mouseCanvas.getContext('2d');
+
+        backgroundCanvas.width = window.innerWidth;
+        backgroundCanvas.height = window.innerHeight;
+        mouseCanvas.width = window.innerWidth;
+        mouseCanvas.height = window.innerHeight;
+
+        let particles = [];
+        let fallingParticles = [];
+        const colors = ['#ff0066', '#00ccff', '#ffcc00', '#9900ff', '#00ff99'];
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 5 + 2;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.1;
+            }
+
+            draw() {
+                mouseCtx.fillStyle = this.color;
+                mouseCtx.beginPath();
+                mouseCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                mouseCtx.fill();
+            }
+        }
+
+        class FallingParticle {
+            constructor() {
+                this.x = Math.random() * backgroundCanvas.width;
+                this.y = -10;
+                this.size = Math.random() * 6 + 4;
+                this.speedY = Math.random() * 3 + 2;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.y += this.speedY;
+                if (this.y > backgroundCanvas.height + this.size) {
+                    this.y = -this.size;
+                    this.x = Math.random() * backgroundCanvas.width;
+                }
+            }
+
+            draw() {
+                backgroundCtx.fillStyle = this.color;
+                backgroundCtx.beginPath();
+                backgroundCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                backgroundCtx.shadowBlur = 15;
+                backgroundCtx.shadowColor = this.color;
+                backgroundCtx.fill();
+                backgroundCtx.shadowBlur = 0;
+            }
+        }
+
+        function createParticles(e) {
+            const x = e.clientX;
+            const y = e.clientY;
+            for (let i = 0; i < 10; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function initFallingParticles() {
+            for (let i = 0; i < 50; i++) {
+                fallingParticles.push(new FallingParticle());
+            }
+        }
+
+        function animateParticles() {
+            backgroundCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+            mouseCtx.clearRect(0, 0, mouseCanvas.width, mouseCanvas.height);
+
+            for (let i = 0; i < fallingParticles.length; i++) {
+                fallingParticles[i].update();
+                fallingParticles[i].draw();
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.2) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        function changeColors() {
+            document.querySelector('button').style.background = `linear-gradient(${Math.random() * 360}deg, ${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`;
+            document.querySelector('h1').style.background = `linear-gradient(${Math.random() * 360}deg, ${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`;
+        }
+
+        window.addEventListener('mousemove', createParticles);
+        window.addEventListener('resize', () => {
+            backgroundCanvas.width = window.innerWidth;
+            backgroundCanvas.height = window.innerHeight;
+            mouseCanvas.width = window.innerWidth;
+            mouseCanvas.height = window.innerHeight;
+        });
+
+        initFallingParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
